@@ -1,0 +1,18 @@
+@import './normalize.css';
+
+
+body {
+    min-height: 100vh;
+    text-align: center;
+    background-color: #000;
+    color: white;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
