@@ -1,0 +1,30 @@
+.container-details {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.card-details {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card-details__image{
+    border-radius: 15px;
+}
+
+.card-details__info {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.card-details__text {
+    font-weight: bold;
+}
