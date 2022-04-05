@@ -1,18 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import style from './MoviesSelection.module.css'
-import movies from '../movies.json'
 import MovieCard from './MovieCard'
+import { getData } from "../utils/fetchData"
+
 
 const MoviesSelection = () => {
+    const [movies, setMovies] = useState([])
+
+    useEffect(() => {
+        getData("/discover/movie").then(dataMovies => {
+            setMovies(dataMovies.results)
+        })
+    }, [])
+
     return (
         <section className={style.moviesSelection}>
             {
-                movies.map(movie => 
+                movies.map(movie => (
                     <MovieCard 
                         key={movie.id}
                         movie={movie}
                     />
-                )
+                ))
             }
         </section>
     )
