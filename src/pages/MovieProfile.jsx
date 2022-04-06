@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
+import Spinner from '../components/Spinner'
 import style from './MovieProfile.module.css'
 import { getData, getMovieImage } from "../utils/fetchData"
 
@@ -8,17 +9,20 @@ const MovieProfile = () => {
     const API = "https://api.themoviedb.org/3"
     
     const {movieId} = useParams()
+    const [isLoading, setIsLoading] = useState(true)
     const [movie, setMovie] = useState(null)
     
     
     useEffect(() => {
+        setIsLoading(true)
         getData("/movie/" + movieId).then(dataMovie => {
             setMovie(dataMovie)
+            setIsLoading(false)
         })
     },[movieId])
-    
-    if(!movie) {
-        return null
+
+    if(isLoading) {
+        return <Spinner />
     }
     
     const imageUrl = getMovieImage(movie.poster_path, 500)
