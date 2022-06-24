@@ -17,7 +17,7 @@ const MoviesSelection = () => {
         setIsLoading(true)
         const searchUrl = search 
             ? "/search/movie?query=" + search
-            : "/discover/movie"
+            : "/trending/movie/week"
         getData(searchUrl).then(dataMovies => {
             setMovies(dataMovies.results)
             setIsLoading(false)
