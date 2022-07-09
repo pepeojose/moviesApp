@@ -1,5 +1,5 @@
 .containerProfile {
-    width: 60%;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 3rem;
@@ -11,7 +11,9 @@
     flex-wrap: wrap;
 }
 
-.cardProfileImage{
+.cardProfileImage {
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 15px;
 }
 
@@ -27,4 +29,10 @@
 
 .cardProfileText {
     font-weight: bold;
+}
+
+@media screen and (min-width: 815px) {
+    .containerProfile {
+        width: 60%;
+    }
 }

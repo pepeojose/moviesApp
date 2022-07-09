@@ -1,4 +1,4 @@
-import question from "../../public/images/question.png";
+import question from "/images/question.png";
 
 export const getData = async (path) => {
     const API = "https://api.themoviedb.org/3";

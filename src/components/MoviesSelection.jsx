@@ -1,45 +1,42 @@
-import React, { useState, useEffect } from 'react'
-import style from './MoviesSelection.module.css'
-import MovieCard from './MovieCard'
-import Spinner from './Spinner'
-import { getData } from "../utils/fetchData"
-import { useQuery } from '../hooks/useQuery'
+import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { getData } from "../utils/fetchData";
+import MovieCard from "./MovieCard";
+import style from "./MoviesSelection.module.css";
+import Spinner from "./Spinner";
 
-
-const MoviesSelection = () => {
-    const [movies, setMovies] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-
-    const query = useQuery()
-    const search = query.get("search")
+const MoviesSelection = ({ search }) => {
+    const [movies, setMovies] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
-        setIsLoading(true)
-        const searchUrl = search 
-            ? "/search/movie?query=" + search
-            : "/trending/movie/week"
-        getData(searchUrl).then(dataMovies => {
-            setMovies(dataMovies.results)
-            setIsLoading(false)
-        })
-    }, [search])
-
-    if(isLoading) {
-        return <Spinner />
-    }
+        setIsLoading(true);
+        const searchUrl = search
+            ? "/search/movie?query=" + search + "&page=" + page
+            : "/trending/movie/week?page=" + page;
+        getData(searchUrl).then((dataMovies) => {
+            setMovies((preMovies) => preMovies.concat(dataMovies.results));
+            setHasMore(dataMovies.page < dataMovies.total_pages);
+            setIsLoading(false);
+        });
+    }, [search, page]);
 
     return (
-        <section className={style.moviesSelection}>
-            {
-                movies.map(movie => (
-                    <MovieCard 
-                        key={movie.id}
-                        movie={movie}
-                    />
-                ))
-            }
-        </section>
-    )
-}
+        <InfiniteScroll
+            dataLength={movies.length}
+            hasMore={hasMore}
+            next={() => setPage((prevPage) => prevPage + 1)}
+            loader={<Spinner />}
+        >
+            <section className={style.moviesSelection}>
+                {movies.map((movie) => (
+                    <MovieCard key={movie.id} movie={movie} />
+                ))}
+            </section>
+        </InfiniteScroll>
+    );
+};
 
-export default MoviesSelection
+export default MoviesSelection;
