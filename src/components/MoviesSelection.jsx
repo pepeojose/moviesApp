@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getData } from "../utils/fetchData";
+import EmptyMovies from "./EmptyMovies";
 import MovieCard from "./MovieCard";
 import style from "./MoviesSelection.module.css";
 import Spinner from "./Spinner";
@@ -22,6 +23,10 @@ const MoviesSelection = ({ search }) => {
             setIsLoading(false);
         });
     }, [search, page]);
+
+    if (!isLoading && movies.length === 0) {
+        return <EmptyMovies />;
+    }
 
     return (
         <InfiniteScroll
